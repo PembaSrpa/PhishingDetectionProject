@@ -87,6 +87,7 @@ Create a virtual environment (optional but recommended):
 
 python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+or just use command prompt (locate the dir to where your current code is)
 
 Install Required Libraries:
 
