@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check URL</title>
+</head>
+<body>
+    <h1>Check if URL is Phishing</h1>
+    <form action="{{ url_for('catch_phish') }}" method="POST">
+        <label for="url">Enter URL:</label>
+        <input type="text" name="url" id="url" required>
+        <button type="submit">Check</button>
+    </form>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
