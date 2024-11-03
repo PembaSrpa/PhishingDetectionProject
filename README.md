@@ -1,5 +1,5 @@
 # PhishingDetectionProject
-# Project Summary: Phishing URL Detection Web Application
+# Project Summary:
 Overview: This project implements a web application to detect phishing URLs using machine learning models. It comprises several components, including data extraction, model training, a database to store blacklisted URLs, a prediction module, and a Flask web application for user interaction.
 
 ## Components
