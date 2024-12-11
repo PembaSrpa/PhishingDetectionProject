@@ -3,11 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phishing Detector</title>
+    <title>Smart Phishing Detector</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #007bff;
+            text-shadow: 2px 2px 4px #888888;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover {
+            background-color: #0069d9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Phishing Detector</h1>
-    <p>Please check if a URL is phishing.</p>
+    <h1>Welcome to the Smart Phishing Detector</h1>
+    <p>This application helps you identify potentially malicious URLs to protect yourself from phishing attacks.  Enter a URL to check if it's safe.</p>
     <a href="{{ url_for('catch_phish') }}">Check URL</a>
 </body>
 </html>
