@@ -3,12 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results</title>
+    <title>Phishing Detection Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-top: 2em;
+            text-shadow: 2px 2px 4px #888888;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 1em auto;
+            line-height: 1.6;
+        }
+
+        .result {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: 2em;
+            padding: 1em 0;
+            background-color: #007bff;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <h1>Results for {{ url }}</h1>
-    <p>The URL is: <strong>{{ res }}</strong></p>
+    <h1>Results for <span class="result">{{ url }}</span></h1>
+    <p>The URL you entered is classified as: <span class="result">{{ res }}</span>.</p>
+    <p>Stay cautious and avoid providing personal information on suspicious websites.</p>
     <a href="{{ url_for('catch_phish') }}">Check Another URL</a>
     <a href="{{ url_for('index') }}">Back to Home</a>
+    <footer>
+        <p></p>
+    </footer>
 </body>
 </html>

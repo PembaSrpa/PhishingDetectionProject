@@ -6,19 +6,43 @@
     <title>Smart Phishing Detector</title>
     <style>
         body {
-            font-family: sans-serif;
-            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             color: #333;
+            margin: 0;
+            padding: 0;
             text-align: center;
         }
+
         h1 {
             color: #007bff;
+            margin-top: 2em;
             text-shadow: 2px 2px 4px #888888;
         }
+
         p {
             font-size: 1.2em;
-            margin-bottom: 20px;
+            max-width: 600px;
+            margin: 1em auto;
+            line-height: 1.6;
         }
+
+        ul {
+            text-align: left;
+            display: inline-block;
+            margin-top: 1em;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            background: #fff;
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         a {
             display: inline-block;
             padding: 10px 20px;
@@ -26,16 +50,36 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
+            margin-top: 20px;
             transition: background-color 0.3s ease;
         }
+
         a:hover {
-            background-color: #0069d9;
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: 2em;
+            padding: 1em 0;
+            background-color: #007bff;
+            color: white;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to the Smart Phishing Detector</h1>
-    <p>This application helps you identify potentially malicious URLs to protect yourself from phishing attacks.  Enter a URL to check if it's safe.</p>
+    <h1>Welcome to the Phishing Detector</h1>
+    <p>This application helps you identify potentially malicious URLs to protect yourself from phishing attacks. Simply enter a URL to check if it's safe and secure.</p>
+    <p>Phishing is a form of cyberattack where attackers impersonate trusted entities to steal sensitive information. Be cautious of the following signs:</p>
+    <ul>
+        <li>Misspelled URLs or domains</li>
+        <li>Unusual requests for sensitive information</li>
+        <li>Websites lacking HTTPS security</li>
+        <li>Urgent or threatening language</li>
+    </ul>
     <a href="{{ url_for('catch_phish') }}">Check URL</a>
+    <footer>
+        <p>&copy; Created by : </p>
+    </footer>
 </body>
 </html>
