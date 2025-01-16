@@ -27,3 +27,4 @@ def classifyURL(url):
             db.add_url(url)  # Add to blacklist if classified as "Phishy"
             return "Phishy"  # Return "Phishy"
         return "Legitimate"  # Return "Legitimate" if classified as safe
+    # Example: Classify a known URL (e.g., youtube.com)

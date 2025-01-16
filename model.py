@@ -63,6 +63,15 @@ if x.shape[0] > 0 and y.shape[0] > 0:
 else:
     raise ValueError("Dataset is empty after preprocessing. Please check the data source and processing steps.")  # Check for empty dataset
 
+# Train-Test Split Diagram (Pie Chart)
+train_test_split_labels = ['Train', 'Test']
+train_test_split_sizes = [len(x_train), len(x_test)]
+plt.figure(figsize=(7, 7))
+plt.pie(train_test_split_sizes, labels=train_test_split_labels, autopct='%1.1f%%', startangle=90, colors=['#66b3ff', '#99ff99'])
+plt.title("Train-Test Split")
+plt.savefig("diagrams/train_test_split.png")  # Save the plot as an image
+plt.close()
+
 def evaluate_model(model, x_train, y_train):
     # Evaluate model using cross-validation
     cv_scores = cross_val_score(model, x_train, y_train, cv=5, scoring='accuracy')
@@ -98,6 +107,13 @@ param_grids = {
 best_overall_model = None
 best_overall_accuracy = 0
 
+# Initialize variables to store metrics for comparison
+metrics_dict = {
+    'Random Forest': [],
+    'XGBoost': [],
+    'Decision Tree': []
+}
+
 # Train and evaluate each model
 for model_name in models:
     print(f"\nTraining {model_name}...")
@@ -119,6 +135,9 @@ for model_name in models:
     recall = recall_score(y_test, y_pred, pos_label=1)
     f1 = f1_score(y_test, y_pred, pos_label=1)
     conf_matrix = confusion_matrix(y_test, y_pred)
+
+    # Store metrics for comparison
+    metrics_dict[model_name] = [accuracy, precision, recall, f1]
 
     # Display model performance
     print(f"Best parameters for {model_name}: {grid_search.best_params_}")
@@ -143,7 +162,7 @@ for model_name in models:
     elapsed_time = time.time() - start_time  # Calculate elapsed time
     print(f"Time taken to train {model_name}: {elapsed_time:.2f} seconds")
 
-    # Save the confusion matrix plot
+    # Save the confusion matrix plot for each model
     plt.figure(figsize=(6, 5))
     sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues")  # Create heatmap of confusion matrix
     plt.xlabel("Predicted Labels")
@@ -157,3 +176,15 @@ if best_overall_model:
     with open("model.pkl", "wb") as best_model_file:
         pickle.dump(best_overall_model, best_model_file)
     print("Best model saved as model.pkl")  # Confirm saving the best model
+
+# Model Comparison Bar Charts
+metrics = ['Accuracy', 'Precision', 'Recall', 'F1 Score']
+for i, metric in enumerate(metrics):
+    model_values = [metrics_dict[model][i] for model in models]
+    plt.figure(figsize=(8, 6))
+    plt.bar(models.keys(), model_values, color=['#66b3ff', '#99ff99', '#ffcc99'])
+    plt.xlabel('Model')
+    plt.ylabel(metric)
+    plt.title(f'Model Comparison: {metric}')
+    plt.savefig(f"diagrams/model_comparison_{metric.lower().replace(' ', '_')}.png")  # Save the plot as an image
+    plt.close()
