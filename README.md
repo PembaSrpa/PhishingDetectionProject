@@ -1,129 +1,97 @@
-# PhishingDetectionProject
-#Project Summary: Phishing URL Detection Web Application
-Overview: This project implements a web application to detect phishing URLs using machine learning models. It comprises several components, including data extraction, model training, a database to store blacklisted URLs, a prediction module, and a Flask web application for user interaction.
+# Phishing URL Detection Project - Usage Guide
 
-## Components
-### Data Collection:
+This repository contains a full-stack machine learning solution for detecting phishing websites. This guide focuses specifically on how to install, configure, and operate the application.
 
-File: dataset.csv
-Description: This CSV file contains features extracted from URLs along with their classifications as either legitimate or phishing.
+---
 
-### Feature Extraction:
+## 🛠 Installation & Setup
 
-File: featuresExt.py
-Functionality: This module includes functions that extract relevant features from a given URL, which will be used for classification. The details of the features extracted are determined by the specific implementation of the module.
+Before running the application, you must set up your local environment and install the necessary dependencies.
 
-### Model Training:
+### 1. Clone the Repository
+Open your terminal or command prompt and run:
+```bash
+git clone [https://github.com/your-username/PhishingDetectionProject.git](https://github.com/your-username/PhishingDetectionProject.git)
+cd PhishingDetectionProject
+```
 
-File: model.py
-Libraries Used: pickle, pandas, numpy, matplotlib, seaborn, sklearn, xgboost.
-Functionality: This script:
-Loads the dataset and preprocesses it.
-Trains three machine learning models: Random Forest, XGBoost, and Decision Tree.
-Utilizes Grid Search for hyperparameter tuning.
-Evaluates model performance based on accuracy, precision, recall, F1 score, and confusion matrices.
-Saves the best-performing model using pickle.
-
-### Database Management:
-
-File: database.py
-Libraries Used: flask_sqlalchemy, os.
-Functionality:
-Defines a Blacklist model to manage URLs identified as phishing.
-Initializes a SQLite database and provides functions to add new URLs to the blacklist and check for existing URLs.
-
-### Prediction:
-
-File: predictor.py
-Libraries Used: pickle, featuresExt, database.
-Functionality:
-Loads the pre-trained model.
-Provides a function classifyURL(url) that checks if a URL is in the blacklist and, if not, extracts features from the URL and classifies it as either "Phishy" or "Legitimate".
-Adds the URL to the blacklist if classified as "Phishy".
-
-### Web Application:
-
-File: app.py
-Libraries Used: flask, predictor, database.
-Functionality:
-Creates a Flask web application with routes for:
-The homepage (index.html).
-URL submission (check.html).
-Displaying classification results (results.html).
-Allows users to submit URLs and view whether they are classified as phishing or legitimate.
-
-### Visualization:
-
-File: visual.py
-Libraries Used: pandas, numpy, matplotlib, seaborn, warnings, os.
-Functionality:
-Performs exploratory data analysis (EDA) by generating various visualizations, including scatter plots, count plots, a correlation heatmap, and distribution plots.
-Saves generated plots to a "diagrams" folder for later use.
-
-## Required Libraries
-
-### The following Python libraries are required to run this project:
-
-Flask
-Flask-SQLAlchemy
-Pandas
-NumPy
-Matplotlib
-Seaborn
-Scikit-learn
-XGBoost
-BeautifulSoup
-Requests
-Whois
-Pickle
-
-## Steps to Run the Web Application
-
-### Set Up Your Environment:
-
-Make sure you have Python installed on your machine (Python 3.7 or later recommended).
-
-### Create a virtual environment (optional but recommended):
-
+### 2. Create a Virtual Environment (Recommended)
+To prevent library conflicts, create a isolated environment:
+```bash
+# For Windows
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-or just use command prompt (locate the dir to where your current code is)
+venv\Scripts\activate
 
-### Install Required Libraries:
+# For macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
 
-Use pip to install the required libraries:
-
+### 3. Install Dependencies
+Install the required Python libraries using the provided requirements file:
+```bash
 pip install -r requirements.txt
+```
+*Key libraries being installed: Flask, Scikit-learn, XGBoost, Pandas, and BeautifulSoup4.*
 
-### Prepare the Dataset:
+---
 
-Ensure the dataset.csv file is available in the project directory.
+## 🚀 How to Use the Application
 
-### Feature Extraction:
+### Step 1: Initialize the Machine Learning Model
+The web application requires a pre-trained model file (`model.pkl`) to make predictions. You must generate this by training the model on the provided dataset.
 
-Run the featuresExt.py script (if necessary) to ensure all features are correctly extracted and ready for model training.
+```bash
+python model.py
+```
+**What happens here:** The script loads `dataset.csv`, extracts features, trains a high-accuracy XGBoost classifier, and saves the result as `model.pkl`. You only need to run this once unless you update the dataset.
 
-### Train the Model:
+### Step 2: Start the Web Server
+Launch the Flask application to start the user interface and initialize the SQLite database.
 
-Execute the model.py script to train the models and save the best model as model.pkl.
-
-### Initialize the Database:
-
-Run the app.py script. This will also call database.py to set up the database:
-
+```bash
 python app.py
+```
+**What happens here:**
+The script starts a local server. It also calls `database.py` to create a `phishing.db` file (if it doesn't exist) to store your URL blacklist.
 
-### Access the Web Application:
+### Step 3: Access the Interface
+1. Open your web browser.
+2. Navigate to: `http://127.0.0.1:5000/`
+3. You will see the Phishing Detection homepage.
 
-Open your web browser and go to http://127.0.0.1:5000/ to access the web application.
+### Step 4: Scanning a URL
+1. Copy a suspicious URL you want to test.
+2. Paste it into the input field on the **index.html** page.
+3. Click the **"Check"** button.
+4. The system will process the URL and redirect you to **results.html**, displaying whether the link is **"Phishy"** or **"Legitimate"**.
 
-Use the form to submit URLs and check their classification status.
 
-### Visualizations:
 
-Optionally, run visual.py to generate and save visualizations of the dataset.
+---
 
-## Conclusion:
+## 🔧 Advanced Usage & Features
 
-This project provides a comprehensive system for detecting phishing URLs, including data preprocessing, model training, database management, and user interaction through a web interface. By following the above steps, users can effectively run and utilize the application for phishing detection.
+### Managing the Blacklist
+The application includes a built-in protection layer. When the machine learning model identifies a URL as phishing:
+* The URL is automatically saved to the **SQLite database**.
+* The next time any user checks that specific URL, the app will instantly flag it as "Phishy" via the `database.py` logic without needing to re-run the ML model.
 
+### Data Visualization (Optional)
+If you wish to see the statistical analysis of the phishing data before using the tool, run:
+```bash
+python visual.py
+```
+This will save several graphs into a `diagrams/` folder. These charts help you visualize how the model distinguishes between safe and malicious links based on features like URL length and HTTPS usage.
+
+
+
+---
+
+## 📝 Usage Notes & Troubleshooting
+
+* **Database Reset:** If you wish to clear the blacklist, simply delete the `.db` file in the project directory; the app will recreate an empty one upon the next launch.
+* **WHOIS Limits:** The `featuresExt.py` script uses the `whois` library. If you check too many URLs in a very short period, your IP might be temporarily throttled by WHOIS servers.
+* **Browser Errors:** Ensure no other service is using port 5000. If you see an "Address already in use" error, close other Flask apps or change the port in `app.run()`.
+
+---
